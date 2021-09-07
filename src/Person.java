@@ -1,4 +1,5 @@
-
+//important how to cast index to character | char c (char)('a' + index);
+//public class Dictionary implements ITrie
 
 public class Person {
 
