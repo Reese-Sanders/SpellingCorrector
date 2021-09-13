@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class SpellCorrector implements ISpellCorrector{
@@ -57,7 +58,7 @@ public class SpellCorrector implements ISpellCorrector{
     public String suggestSimilarWord(String inputWord){
         if (dictionary.find(inputWord) != null){
             if (dictionary.find(inputWord).getValue() > 0) {
-                return inputWord;
+                return inputWord.toLowerCase();
             }
         }
 

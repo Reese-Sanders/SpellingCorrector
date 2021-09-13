@@ -1,19 +1,19 @@
 package spell;
 
-public class Trie {
+public class Trie implements ITrie {
     private static final int ascii = 97;
 
     private int wordCount;
     private int nodeCount;
-    private Node root;
+    private INode root;
 
     public Trie() {
         wordCount = 0;
-        nodeCount = 0;
+        nodeCount = 1;
         root = new Node();
     }
 
-    public Node getRoot(){
+    public INode getRoot(){
         return root;
     }
 
@@ -28,7 +28,7 @@ public class Trie {
         addHelper(root, cutWord);
     }
 
-    private void addHelper(Node current, StringBuilder word){
+    private void addHelper(INode current, StringBuilder word){
         if (word.length() == 0) {
             if ( current.getValue() == 0){
                 wordCount++;
@@ -37,7 +37,7 @@ public class Trie {
             return;
         }
         int index = castCharToInt(word.charAt(0));
-        Node [] children = current.getChildren();
+        INode [] children = current.getChildren();
         if (children[index] == null){
             children[index] = new Node();
             word.deleteCharAt(0);
@@ -76,12 +76,16 @@ public class Trie {
         return findHelper(root, builtWord);
     }
 
-    private INode findHelper(Node current, StringBuilder word){
+    private INode findHelper(INode current, StringBuilder word){
         if (current == null){
             return null;
         }
         if (word.length() == 0){
-            return current;
+            if (current.getValue() > 0) {
+                return current;
+            } else {
+                return null;
+            }
         } else {
             int index = castCharToInt(word.charAt(0));
             if (current.getChildren()[index] == null){
@@ -126,13 +130,13 @@ public class Trie {
         return output.toString();
     }
 
-    private void toStringHelper(Node current, StringBuilder curWord, StringBuilder output){
+    private void toStringHelper(INode current, StringBuilder curWord, StringBuilder output){
         if (current.getValue() > 0){
             output.append(curWord.toString());
             output.append("\n");
         }
         for (int i = 0; i < current.getChildren().length; ++i){
-            Node child = current.getChildren()[i];
+            INode child = current.getChildren()[i];
             if (child != null) {
                 char childLetter = castIntToChar(i);
                 curWord.append(childLetter);
@@ -187,7 +191,7 @@ public class Trie {
         return equalsHelper(this.root, compDic.getRoot());
     }
 
-    private boolean equalsHelper(Node c1, Node c2){
+    private boolean equalsHelper(INode c1, INode c2){
         if (c1.getValue() != c2.getValue()){
             System.out.println("Word value is different");
             return false;

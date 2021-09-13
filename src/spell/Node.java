@@ -1,7 +1,7 @@
 package spell;
 
 public class Node implements INode {
-    Node [] children;
+    INode [] children;
     int count;
 
     public Node() {
@@ -30,7 +30,7 @@ public class Node implements INode {
      *
      * @return the child nodes.
      */
-    public Node[] getChildren(){
+    public INode[] getChildren(){
         return children;
     }
 }
